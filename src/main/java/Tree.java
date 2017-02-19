@@ -20,13 +20,9 @@ public class Tree{
 	}
 	public Integer getNonAdjSum(){
 		Pair pair = root.getSums();
-		if(pair.getIncl()>pair.getExcl()){
-			root.setInTeam(true);
+		if(pair.getIncl()>pair.getExcl())
 			return pair.getIncl();
-		} else {
-			root.setInTeam(false);
-			return pair.getExcl();
-		}
+		else return pair.getExcl();
 
 	}
 	public int getDepth(){

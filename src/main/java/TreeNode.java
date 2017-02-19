@@ -4,11 +4,10 @@ import java.util.List;
 public class TreeNode{
     private ArrayList<TreeNode> nodes = new ArrayList<>();
     private Integer data;
-    private boolean isInTeam;
+    private Pair pair;
     private Integer index;
     public TreeNode(Integer nodeData, Integer index){
         data = nodeData;
-        isInTeam = false;
         this.index = index;
     }
     public TreeNode insert(Integer insertValue, Integer index){
@@ -21,44 +20,41 @@ public class TreeNode{
         return data;
     }
     public Pair getSums(){
-        Pair pair;
         if (nodes.isEmpty()){
-            pair = new Pair(data, 0);
+            pair = new Pair(getData(), 0);
         } else {
-            Integer incl=0;
+            Integer incl=getData();
             Integer excl=0;
             for (TreeNode node:nodes){
                 Pair iterPair= node.getSums();
-                //calculating max sum including data in this node
+                //calculating max sum including data in this subnode
                 incl += iterPair.getExcl();
-                //calculating max sum excluding data in this node
-                //excl += Math.max(iterPair.getExcl(),iterPair.getIncl());
+                //calculating max sum excluding data in this subnode
                 if (iterPair.getIncl()>iterPair.getExcl()){
-                    node.setInTeam(true);// ERROR - for excl sum is not necessarily the biggest one
                     excl+= iterPair.getIncl();
-                } else {
-                    setInTeam(false);
-                    excl+= iterPair.getExcl();
-                }
+                } else  excl+= iterPair.getExcl();
 
             }
-            incl+=data;
+
             pair = new Pair(incl, excl);
         }
         return pair;
 
     }
-    public boolean getInTeam(){
-        return isInTeam;
-    }
-    public void setInTeam(boolean isInTeam){
-        this.isInTeam = isInTeam;
-    }
+
     public void getTeamIndexes(List<Integer> list){//TODO Should I rather create new ArrayList and merge it with one of upper level?
-        if (getInTeam()) list.add(index);
-        if (!nodes.isEmpty())
-            for (TreeNode node:nodes)
-                node.getTeamIndexes(list);
+        if (pair.getIncl()>pair.getExcl()){
+            list.add(index);//add this to list and check all grandchild nodes (child nodes are not to be included)
+            if (!nodes.isEmpty())
+            for(TreeNode node:nodes)
+                if (!node.nodes.isEmpty())//if there are grandchild nodes
+                for (TreeNode subNode : node.nodes)
+                    subNode.getTeamIndexes(list);
+        }else{//call this function recursively in child nodes
+            if(!nodes.isEmpty())
+                for (TreeNode node:nodes)
+                    node.getTeamIndexes(list);
+        }
     }
     public int getDepth(){
         if (nodes.isEmpty())

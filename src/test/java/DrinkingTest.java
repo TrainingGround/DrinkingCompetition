@@ -1,12 +1,7 @@
 import org.junit.Test;
-
-import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
-/**
- * Created by roma on 19.02.17.
- */
 public class DrinkingTest {
     // test arrays {1 1 1 1 1 1 1 1 1 1 1} {0 0 0 1 2 3 1 2 3}. Should be 0, 4 ,5 ,6 ,7 ,8, 9 with total of 7 DC
     @Test
@@ -28,6 +23,6 @@ public class DrinkingTest {
         // getBestValue() should always be run before get getTeam()
         assert(comp.getBestTeamValue()==25);
         List<Integer> shouldBe = Arrays.asList(0,3,4,5,6,9,10);
-        assert(comp.getTeam().equals(shouldBe));//error here
+        assert(comp.getTeam().equals(shouldBe));
     }
 }
