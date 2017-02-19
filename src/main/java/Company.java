@@ -34,6 +34,7 @@ public class Company {
 
     }
     public void printDrinkingTeam(){
-        tree.getTeamList().stream().sorted().forEach(x->System.out.printf("%n %d",x));
+        System.out.printf("%n Indexes of team members: %n");
+        tree.getTeamList().stream().sorted().forEach(x->System.out.printf(" %d",x));
     }
 }
