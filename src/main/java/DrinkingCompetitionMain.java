@@ -9,10 +9,10 @@ public class DrinkingCompetitionMain {
     private static Integer[] subordinationArray;
     private static boolean inputIsAlright = true;
     public static void main(String[] args){
-        //inputArrayData();
+        inputArrayData();
         if (inputIsAlright){
-            Company company = new Company(new Integer[]{8,5,6,4,3,2,1,0,0,4,3},
-                    new Integer[]{0,0,1,1,1,2,6,6,8,8});
+            Company company = new Company(enduranceArray,
+                    subordinationArray);
             company.makeTree();
             System.out.printf("%n Best team value: %d", company.getBestTeamValue());
             company.printDrinkingTeam();
